@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>VIBETALK</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    :root {
+      --primary-dark: #121a24;
+      --primary-blue: #1a237e;
+      --accent-purple: #7e57c2;
+      --danger-red: #c62828;
+      --warning-orange: #f57c00;
+      --success-green: #2e7d32;
+      --text-light: #f5f5f5;
+      --card-bg: rgba(26, 35, 46, 0.85);
+      --high-contrast-bg: #000;
+      --high-contrast-text: #fff;
+    }
+    
+    body {
+      background: linear-gradient(135deg, rgba(18, 26, 36, 0.9), rgba(30, 40, 60, 0.9)), 
+                  url('https://images.unsplash.com/photo-1518843025960-d60217f226f5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1800&q=80');
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center;
+      min-height: 100vh;
+      color: var(--text-light);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+    }
+    
+    .high-contrast {
+      background: var(--high-contrast-bg) !important;
+      color: var(--high-contrast-text) !important;
+    }
+    
+    .high-contrast .detection-card {
+      background: #000 !important;
+      border: 2px solid yellow !important;
+    }
+    
+    .high-contrast .navbar {
+      background-color: #000 !important;
+      border-bottom: 3px solid yellow;
+    }
+    
+    .navbar {
+      background-color: var(--primary-dark) !important;
+      border-bottom: 3px solid var(--accent-purple);
+      box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+    }
+    
+    .navbar-brand {
+      font-weight: 700;
+      letter-spacing: 1px;
+      font-size: 1.4rem;
+    }
+    
+    .nav-link {
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 30px 20px;
+    }
+    
+    .page-title {
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: 700;
+      font-size: 2.5rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      color: white;
+    }
+    
+    .page-subtitle {
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: 1.2rem;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      color: rgba(255, 255, 255, 0.85);
+    }
+    
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 50px;
+    }
+    
+    .detection-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+      border-top: 4px solid;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    
+    .detection-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    .card-header {
+      padding: 25px 20px;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .card-body {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-grow: 1;
+      justify-content: space-between;
+    }
+    
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+    
+    .card-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    
+    .card-description {
+      text-align: center;
+      margin-bottom: 20px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      margin-bottom: 20px;
+      padding: 12px 15px;
+      border-radius: 8px;
+    }
+    
+    .form-control:focus {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: white;
+      box-shadow: 0 0 0 0.25rem rgba(126, 87, 194, 0.25);
+      border-color: var(--accent-purple);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-purple), #5e35b1);
+      border: none;
+      padding: 12px 20px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.3s;
+      font-size: 1.1rem;
+      border-radius: 8px;
+      width: 100%;
+      margin-top: auto;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #8e6dcf, #6a45b8);
+    }
+    
+    /* Custom border colors for each card */
+    .speech-card { border-color: #9c27b0; }
+    .gesture-card { border-color: #2196f3; }
+    .object-card { border-color: #4caf50; }
+    
+    /* Custom icon colors */
+    .speech-card .card-icon { color: #9c27b0; }
+    .gesture-card .card-icon { color: #2196f3; }
+    .object-card .card-icon { color: #4caf50; }
+    
+    hr {
+      border-color: rgba(255, 255, 255, 0.1);
+      margin: 20px 0;
+    }
+    
+    .accessibility-tools {
+      display: flex;
+      justify-content: center;
+      padding: 15px 30px;
+      gap: 15px;
+      flex-wrap: wrap;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 15px;
+      margin-top: 40px;
+    }
+    
+    .accessibility-btn {
+      background: var(--primary-blue);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+    }
+    
+    .accessibility-btn:hover {
+      background: var(--accent-purple);
+      transform: scale(1.05);
+    }
+    
+    .text-large {
+      font-size: 1.2rem !important;
+    }
+    
+    .text-xlarge {
+      font-size: 1.4rem !important;
+    }
+    
+    .speech-section {
+      background: rgba(26, 35, 46, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 40px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+    
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 25px;
+      text-align: center;
+      font-weight: 600;
+    }
+    
+    textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 15px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      margin-bottom: 20px;
+      font-size: 1rem;
+    }
+    
+    textarea:focus {
+      outline: none;
+      border-color: var(--accent-purple);
+      box-shadow: 0 0 0 0.25rem rgba(126, 87, 194, 0.25);
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, #4caf50, #2e7d32);
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.1rem;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    
+    .btn-success:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #5cb860, #3d8b40);
+    }
+    
+    .btn-info {
+      background: linear-gradient(135deg, #2196f3, #0d47a1);
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 1.1rem;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+    
+    .btn-info:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(135deg, #42a5f5, #1565c0);
+    }
+    
+    .message {
+      background: rgba(46, 125, 50, 0.2);
+      border: 1px solid rgba(46, 125, 50, 0.5);
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .output-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+      min-height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    
+    @media (max-width: 768px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .detection-card {
+        width: 100%;
+      }
+      
+      .accessibility-tools {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+      
+      .page-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <i class="fas fa-eye me-2"></i>
+     VIBETALK
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#myNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item">
+          
+          <a class="nav-link" href="/">
+            <i class="fas fa-sign-out-alt me-1"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-container">
+  <h1 class="page-title">VIBETALK</h1>
+  <p class="page-subtitle">An AI-powered assistant designed to help visually impaired individuals navigate their environment with greater independence and confidence.</p>
+  
+  <!-- Speech Recognition & Text-to-Speech Section -->
+  <div class="speech-section">
+    <!-- <h2 class="section-title">Speech & Text Conversion</h2> -->
+    
+    <div class="row">
+      
+   
+  
+  <!-- Computer Vision Features Section -->
+  <h2 class="section-title">Computer Vision Features</h2>
+  
+  <div class="content-grid">
+    <!-- Gesture Detection -->
+    <div class="detection-card gesture-card">
+      <div class="card-header">
+        <i class="fas fa-hands card-icon"></i>
+        <h3 class="card-title">Word Recognitions</h3>
+      </div>
+      <div class="card-body">
+        <p class="card-description">Detect and interpret hand gestures through your camera. This feature helps in non-verbal communication and control.</p>
+        <form method="post" action="{{ url_for('Live1')}}" class="w-100">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search me-2"></i>Word Recognition
+          </button>
+        </form>
+      </div>
+    </div>
+
+      <!-- Number Detection -->
+    <div class="detection-card gesture-card">
+      <div class="card-header">
+        <i class="fas fa-hands card-icon"></i>
+        <h3 class="card-title">Number Recognitions</h3>
+      </div>
+      <div class="card-body">
+        <p class="card-description">Detect and interpret hand gestures through your camera. This feature helps in non-verbal communication and control.</p>
+        <form method="post" action="{{ url_for('Live2')}}" class="w-100">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search me-2"></i>Number Recognition
+          </button>
+        </form>
+      </div>
+    </div>
+    
+  
+     <!-- A to Z Detection -->
+    <div class="detection-card object-card">
+      <div class="card-header">
+        <i class="fas fa-cube card-icon"></i>
+        <h3 class="card-title">A to Z Recognition</h3>
+      </div>
+      <div class="card-body">
+        <p class="card-description">Identify objects in your environment through your camera. Get audio descriptions of items around you.</p>
+        <form method="post" action="{{ url_for('Live4')}}" class="w-100">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-search me-2"></i>Alphabets Recognition
+          </button>
+        </form>
+      </div>
+    </div>
+   
+  </div>
+  </div>
+  </div>
+  
+  
+
+
+ 
+<script>
+  // Add animation when cards come into view
+  $(document).ready(function() {
+    $('.detection-card').each(function(i) {
+      $(this).css('opacity', 0).css('transform', 'translateY(20px)');
+      $(this).delay(i * 150).animate({
+        opacity: 1
+      }, 400);
+      $(this).css('transform', 'translateY(0)');
+    });
+    
+    // High contrast mode toggle
+    $('#highContrastToggle').click(function() {
+      $('body').toggleClass('high-contrast');
+      if ($('body').hasClass('high-contrast')) {
+        $(this).html('<i class="fas fa-adjust"></i> Normal Mode');
+      } else {
+        $(this).html('<i class="fas fa-adjust"></i> High Contrast');
+      }
+    });
+    
+    // Text size toggle
+    let textSizeState = 0;
+    $('#textSizeToggle').click(function() {
+      textSizeState = (textSizeState + 1) % 3;
+      
+      if (textSizeState === 0) {
+        $('body').removeClass('text-large text-xlarge');
+        $(this).html('<i class="fas fa-text-height"></i> Text Size');
+      } else if (textSizeState === 1) {
+        $('body').removeClass('text-xlarge').addClass('text-large');
+        $(this).html('<i class="fas fa-text-height"></i> Larger Text');
+      } else {
+        $('body').removeClass('text-large').addClass('text-xlarge');
+        $(this).html('<i class="fas fa-text-height"></i> Largest Text');
+      }
+    });
+    
+    // Text-to-speech functionality
+    $('#readPage').click(function() {
+      const speech = new SpeechSynthesisUtterance();
+      speech.text = "Accessibility Assistant. This application provides features to help visually impaired individuals. The Text-to-Speech feature converts written text into spoken words. The Speech-to-Text feature converts your spoken words into text. Gesture Detection interprets hand gestures through your camera. Object Detection identifies items in your environment. Use the buttons to navigate to each feature.";
+      speech.volume = 1;
+      speech.rate = 0.9;
+      speech.pitch = 1;
+      speech.lang = 'en-US';
+      
+      window.speechSynthesis.speak(speech);
+    });
+    
+    // Speech-to-Text functionality
+    const recordBtn = document.getElementById("recordBtn");
+    const output = document.getElementById("output");
+
+    recordBtn.addEventListener("click", () => {
+      output.textContent = "Listening...";
+      fetch("/recognize", { method: "POST" })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success") {
+            output.textContent = "You said: " + data.text;
+            
+            // Speak the recognized text
+            const speech = new SpeechSynthesisUtterance();
+            speech.text = "You said: " + data.text;
+            speech.volume = 1;
+            speech.rate = 0.9;
+            speech.pitch = 1;
+            speech.lang = 'en-US';
+            window.speechSynthesis.speak(speech);
+          } else {
+            output.textContent = "Error: " + data.message;
+          }
+        })
+        .catch(err => {
+          output.textContent = "Error occurred: " + err;
+        });
+    });
+    
+    // Add descriptive text for screen readers
+    $('.detection-card').each(function() {
+      const title = $(this).find('.card-title').text();
+      $(this).attr('aria-label', title + ' feature card');
+    });
+  });
+</script>
+</body>
+</html>
