@@ -4,14 +4,14 @@ VibeTalk is an AI-powered assistive communication system designed to bridge the 
 
 ---
 
-## 🎯 Problem Statement
+## Problem Statement
 Individuals with hearing and speech impairments face major challenges in everyday communication because most people do not understand sign language. Existing solutions are often expensive, hardware-dependent, or require continuous internet connectivity.
 
 VibeTalk addresses this gap by providing a **low-cost, web-based, offline assistive communication system** using computer vision and artificial intelligence.
 
 ---
 
-## 🚀 Features
+## Features
 - Real-time **Indian Sign Language (ISL) gesture recognition**
 - Converts gestures into **text and speech**
 - Uses **standard webcam** (no special hardware required)
@@ -22,7 +22,7 @@ VibeTalk addresses this gap by providing a **low-cost, web-based, offline assist
 
 ---
 
-## 🧠 Technologies Used
+## Technologies Used
 
 ### Programming & Frameworks
 - **Python**
@@ -39,7 +39,7 @@ VibeTalk addresses this gap by providing a **low-cost, web-based, offline assist
 
 ---
 
-## 🏗️ System Architecture
+##  System Architecture
 1. Webcam captures hand gestures
 2. MediaPipe detects hand landmarks
 3. AI model classifies gestures
@@ -49,7 +49,7 @@ VibeTalk addresses this gap by providing a **low-cost, web-based, offline assist
 
 ---
 
-## 🖥️ How to Run the Project
+##  How to Run the Project
 
 ### Prerequisites
 - Python 3.9+
